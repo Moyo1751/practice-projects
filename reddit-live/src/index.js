@@ -3,32 +3,16 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 // import App from './App';
 import reportWebVitals from "./reportWebVitals";
-import axios from "axios";
-
-function Reddit() {
-  const [posts, setPosts] = React.useState([]);
-  React.useEffect(() => {
-    axios.get(`https://www.reddit.com/r/reactjs.json`).then((res) => {
-      const newPosts = res.data.data.children.map((obj) => obj.data);
-      setPosts(newPosts);
-    });
-  }, []);
-  return (
-    <div>
-      <h1>/r/reactjs</h1>
-      <ul>
-        {posts.map((posts) => {
-          return <li key={posts.id}>{posts.title}</li>;
-        })}
-      </ul>
-    </div>
-  );
-}
+import { Provider } from "react-redux";
+import { store } from "./data/store";
+import Reddit from "./reddit";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Reddit />
+    <Provider store={store}>
+      <Reddit />
+    </Provider>
   </React.StrictMode>
 );
 
